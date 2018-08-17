@@ -43,3 +43,12 @@ function calculate_secret_key(their_public, my_private) {
     var shared_hash = SHA1(shared_secret.toString());
     return shared_hash;
 }
+
+function get_secret_key() {
+    var private_key, public_key = generate_key();
+    $.get("get_key/"+public_key, function(result){
+        var secret = calculate_secret_key(result,private_key);
+        $("div").html("key: "+secret);
+        return secret;
+    });
+}
